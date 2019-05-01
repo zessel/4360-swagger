@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Airline API
+  description: |
+    An airline flight searching & booking API
+    with the limited functionality in that it can
+    only search discounts
+  version: 0.0.1
+servers:
+  - url: http://api.example.com/v1
+    description: Optional server description, e.g. Main (production) server
+paths:
+  /info/baggage:
+    get:
+      summary: returns a table of baggage fees
+      responses:
+        '200':    # status code
+          description: Successful return of table
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  bag:
+                    type: string
+                  weight:
+                    type: string
+                  cost:
+                    type: string
+                example:
+                  - bag: "1st"
+                    weight: "50lb | 23kg"
+                    cost: "free"
+  /support:              
+    post:
+      summary: Create a request ticket for rescheduled flight
+      parameters:
+        - flight_id: 
+          in: query
+          required: true
+          description: Original flight ID number
+          schema:
+            type : string
+          example: MSA3028
+      responses:
+        '200':    # status code
+          description: ticket created
+          content:
+            application/json:
+              schema: 
+                type: string
+                example: 
+                  - "Reschedule ticket created for flight MSA3028"
+        '400':
+          description: Non-existant flight_id
